@@ -366,10 +366,10 @@ function renderLetter(){
  renderLetterGrid();
 }
 function speakCurrentLetter(){
-  let d=letters[letterIndex];
-  let cue=phonicsVoice[d[0]]||d[0];
-  speakSoundAndWord(cue,d[2]);
-}
+  const letter = letters[letterIndex][0];
+  const audio = new Audio("audio/" + letter + ".mp3");
+  audio.play();
+  }
 function prevLetter(){letterIndex=(letterIndex+25)%26;renderLetter()}
 function nextLetter(){letterIndex=(letterIndex+1)%26;renderLetter()}
 

@@ -2,1456 +2,426 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-      maximum-scale=1.0, user-scalable=no">
-
-<title>🌟 English Word Adventure</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>🌈 English Phonics Academy</title>
 <style>
-*{
-  box-sizing:border-box;
-}
-
-html,body{
-  margin:0;
-  padding:0;
-  min-height:100%;
-  font-family:Arial,sans-serif;
-  background:linear-gradient(160deg,#4527a0,#7b1fa2,#ec407a);
-  color:#fff;
-  touch-action:manipulation;
-}
-
-body{
-  display:flex;
-  justify-content:center;
-}
-
-#app{
-  width:100%;
-  max-width:430px;
-  min-height:100vh;
-  padding:12px;
-  text-align:center;
-}
-
-/* HEADER */
-
-.header{
-  background:rgba(255,255,255,.14);
-  border-radius:20px;
-  padding:12px;
-  box-shadow:0 5px 20px #0004;
-}
-
-.title{
-  font-size:28px;
-  font-weight:bold;
-  margin:3px 0;
-  background:linear-gradient(
-    90deg,
-    #ffeb3b,
-    #00e5ff,
-    #76ff03,
-    #ff80ab
-  );
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-}
-
-.subtitle{
-  font-size:13px;
-  opacity:.9;
-}
-
-/* HUD */
-
-.hud{
-  display:flex;
-  justify-content:space-around;
-  margin:12px 0;
-  gap:5px;
-}
-
-.hudBox{
-  flex:1;
-  background:#0004;
-  border-radius:14px;
-  padding:8px 3px;
-  font-size:13px;
-}
-
-.hudValue{
-  display:block;
-  font-size:18px;
-  font-weight:bold;
-  color:#ffeb3b;
-}
-
-/* MENU */
-
-#menu{
-  margin-top:12px;
-}
-
-.menuBtn{
-  width:100%;
-  border:none;
-  margin:7px 0;
-  padding:16px;
-  border-radius:18px;
-  font-size:19px;
-  font-weight:bold;
-  color:white;
-  box-shadow:0 5px 12px #0005;
-  cursor:pointer;
-}
-
-.phonics{
-  background:linear-gradient(135deg,#00bcd4,#2979ff);
-}
-
-.blending{
-  background:linear-gradient(135deg,#00c853,#64dd17);
-}
-
-.reading{
-  background:linear-gradient(135deg,#ff9100,#ff3d00);
-}
-
-.spelling{
-  background:linear-gradient(135deg,#d500f9,#aa00ff);
-}
-
-/* GAME */
-
-#game{
-  display:none;
-}
-
-.card{
-  background:#ffffff;
-  color:#333;
-  border-radius:24px;
-  padding:20px 12px;
-  margin-top:12px;
-  box-shadow:0 7px 20px #0005;
-}
-
-.bigLetter{
-  font-size:90px;
-  font-weight:bold;
-  color:#7b1fa2;
-  margin:5px;
-}
-
-.word{
-  font-size:40px;
-  font-weight:bold;
-  color:#2979ff;
-  margin:12px;
-}
-
-.picture{
-  font-size:80px;
-  margin:5px;
-}
-
-.soundBtn{
-  border:none;
-  border-radius:50%;
-  width:65px;
-  height:65px;
-  font-size:30px;
-  background:#ffca28;
-  box-shadow:0 5px 10px #0004;
-}
-
-.answerGrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:15px;
-}
-
-.answerBtn{
-  border:none;
-  border-radius:15px;
-  padding:16px;
-  font-size:22px;
-  font-weight:bold;
-  background:#e3f2fd;
-  color:#1565c0;
-}
-
-.answerBtn:active{
-  transform:scale(.95);
-}
-
-.feedback{
-  min-height:28px;
-  margin-top:10px;
-  font-size:18px;
-  font-weight:bold;
-}
-
-.nextBtn{
-  border:none;
-  background:#00c853;
-  color:white;
-  padding:13px 25px;
-  border-radius:14px;
-  font-size:18px;
-  font-weight:bold;
-  margin-top:10px;
-}
-
-.backBtn{
-  border:none;
-  background:#424242;
-  color:white;
-  padding:10px 20px;
-  border-radius:12px;
-  font-size:15px;
-  margin-top:12px;
-}
-
-/* PROGRESS */
-
-.progress{
-  height:12px;
-  background:#ddd;
-  border-radius:20px;
-  overflow:hidden;
-  margin:15px 0;
-}
-
-.progressBar{
-  height:100%;
-  width:0%;
-  background:linear-gradient(
-    90deg,#00c853,#76ff03
-  );
-}
-
-/* ALPHABET */
-
-.alphabet{
-  display:grid;
-  grid-template-columns:
-    repeat(5,1fr);
-  gap:7px;
-  margin-top:15px;
-}
-
-.letterBtn{
-  border:none;
-  border-radius:12px;
-  padding:12px 5px;
-  background:#ede7f6;
-  color:#512da8;
-  font-size:20px;
-  font-weight:bold;
-}
-
-.letterBtn:active{
-  transform:scale(.92);
-}
-
-/* HIDDEN */
-
-.hidden{
-  display:none;
-}
-
-.small{
-  font-size:12px;
-  opacity:.7;
-  margin-top:15px;
-}
-
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;font-family:Arial,sans-serif;background:linear-gradient(145deg,#e8f8ff,#fff7df,#f5e9ff);color:#263238;min-height:100%;touch-action:manipulation}
+body{display:flex;justify-content:center}
+.app{width:100%;max-width:460px;min-height:100vh;padding:10px}
+header{text-align:center;background:linear-gradient(135deg,#00a8e8,#7b2cbf,#ff4d8d);color:#fff;border-radius:24px;padding:16px 12px;box-shadow:0 8px 20px #0002;margin-bottom:12px}
+header h1{margin:0;font-size:27px}
+header p{margin:6px 0 0;font-size:13px;font-weight:bold}
+.stats{display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+.stat{background:#ffffffdd;color:#333;border-radius:14px;padding:6px 11px;font-size:13px;font-weight:bold}
+.screen{display:none}
+.screen.active{display:block}
+.menu-grid{display:grid;gap:10px}
+.card{border:0;border-radius:18px;padding:15px;color:#fff;text-align:left;font-weight:bold;box-shadow:0 5px 12px #0002;cursor:pointer}
+.card:active{transform:scale(.98)}
+.card h2{margin:0 0 4px;font-size:20px}
+.card p{margin:0;font-size:13px;opacity:.95}
+.c1{background:linear-gradient(135deg,#43a047,#8bc34a)}
+.c2{background:linear-gradient(135deg,#ff9800,#ffca28)}
+.c3{background:linear-gradient(135deg,#1976d2,#42a5f5)}
+.c4{background:linear-gradient(135deg,#8e24aa,#ce93d8)}
+.c5{background:linear-gradient(135deg,#00897b,#26c6da)}
+.c6{background:linear-gradient(135deg,#ef5350,#ff80ab)}
+.c7{background:linear-gradient(135deg,#5e35b1,#7e57c2)}
+.c8{background:linear-gradient(135deg,#f4511e,#ffb300)}
+.lesson{background:#fff;border-radius:22px;padding:14px;box-shadow:0 5px 16px #0002}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.back,.home{border:0;border-radius:12px;background:#263238;color:#fff;padding:9px 12px;font-weight:bold}
+.topbar h2{margin:0;font-size:18px}
+.sound-btn{border:0;border-radius:50%;width:54px;height:54px;font-size:25px;background:#2196f3;color:#fff;box-shadow:0 4px 10px #0003}
+.big-letter{font-size:110px;font-weight:900;text-align:center;line-height:1;color:#43a047;text-shadow:3px 4px 0 #c8e6c9}
+.sound-text{text-align:center;font-size:27px;font-weight:900;color:#7b1fa2}
+.word{text-align:center;font-size:30px;font-weight:900;margin:8px}
+.picture{font-size:68px;text-align:center;margin:4px}
+.letter-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:12px}
+.letter-grid button{border:2px solid #ddd;background:#fff;border-radius:10px;padding:9px 0;font-size:17px;font-weight:bold}
+.letter-grid button.selected{background:#8bc34a;color:#fff;border-color:#689f38}
+.navrow{display:flex;gap:8px;justify-content:center;margin-top:12px}
+.navrow button,.choice{border:0;border-radius:13px;padding:11px 15px;background:#1976d2;color:#fff;font-weight:bold}
+.vowels{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.vowel{border:0;border-radius:16px;padding:13px 4px;background:#fff3cd;border:2px solid #ffd54f;font-weight:bold;font-size:17px}
+.example-box{background:#f3f9ff;border-radius:18px;padding:12px;margin-top:12px;text-align:center}
+.example-list{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.example-list button{border:0;border-radius:12px;background:#e3f2fd;padding:10px 13px;font-size:18px;font-weight:bold}
+.blend-letters{display:flex;justify-content:center;gap:9px;margin:18px 0}
+.blend-letter{width:70px;height:78px;border-radius:18px;background:#fff3e0;border:3px solid #ff9800;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:900}
+.blend-word{text-align:center;font-size:40px;font-weight:900;color:#1565c0;letter-spacing:3px}
+.tap-note{text-align:center;font-weight:bold;color:#666}
+.family-tabs{display:flex;gap:7px;overflow:auto;padding-bottom:7px}
+.family-tabs button{border:0;border-radius:12px;background:#ede7f6;padding:9px 13px;font-weight:bold;white-space:nowrap}
+.family-tabs button.active{background:#7e57c2;color:#fff}
+.family-word{font-size:42px;font-weight:900;text-align:center;color:#6a1b9a;margin:15px}
+.family-ending{color:#ef6c00}
+.option-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.option{border:0;border-radius:15px;background:#e8f5e9;padding:14px;font-size:22px;font-weight:bold}
+.option.correct{background:#66bb6a;color:#fff}
+.option.wrong{background:#ef5350;color:#fff}
+.feedback{text-align:center;min-height:28px;font-size:18px;font-weight:bold;margin-top:8px}
+.rule{border-radius:17px;padding:13px;margin:9px 0;background:#f8f8f8;border-left:7px solid #42a5f5}
+.rule h3{margin:0 0 5px}
+.rule p{margin:4px 0}
+.spell-word{font-size:42px;letter-spacing:5px;text-align:center;font-weight:900;color:#6a1b9a;margin:15px}
+.answer{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:12px}
+.answer button{width:42px;height:42px;border:2px solid #90caf9;background:#fff;border-radius:10px;font-weight:bold;font-size:19px}
+.keyboard{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.keyboard button{border:0;border-radius:9px;background:#eceff1;padding:10px 2px;font-weight:bold;font-size:16px}
+.progress{height:12px;background:#eee;border-radius:20px;overflow:hidden;margin:10px 0}
+.progress span{display:block;height:100%;background:linear-gradient(90deg,#43a047,#00c853);width:0}
+.message{text-align:center;min-height:26px;font-weight:bold;color:#00897b}
+.badge{text-align:center;font-size:70px}
+.center{text-align:center}
+.small{font-size:12px;color:#666}
+button{font-family:inherit;cursor:pointer}
+footer{text-align:center;color:#777;font-size:11px;padding:15px}
 </style>
 </head>
-
 <body>
+<div class="app">
+<header>
+  <h1>🌈 ENGLISH PHONICS ACADEMY</h1>
+  <p>Learn • Read • Blend • Spell</p>
+  <div class="stats">
+    <div class="stat">⭐ <span id="stars">0</span></div>
+    <div class="stat">🪙 <span id="coins">0</span></div>
+    <div class="stat">🏆 <span id="badges">0</span></div>
+  </div>
+</header>
 
-<div id="app">
+<section id="home" class="screen active">
+  <div class="menu-grid">
+    <button class="card c1" onclick="openLetters()"><h2>1. 🔤 First Sounds A–Z</h2><p>Learn the first phonics sound of every letter.</p></button>
+    <button class="card c2" onclick="openVowels('short')"><h2>2. 🅰️ Short Vowel Sounds</h2><p>a, e, i, o, u — listen and practise.</p></button>
+    <button class="card c3" onclick="openVowels('long')"><h2>3. 🌈 Long Vowel Sounds</h2><p>Long a, e, i, o and u with examples.</p></button>
+    <button class="card c4" onclick="openBlend()"><h2>4. 🧩 CVC Blending</h2><p>Blend sounds together to read simple words.</p></button>
+    <button class="card c5" onclick="openFamilies()"><h2>5. 🏠 Word Families</h2><p>-at, -an, -ig, -op, -ug and more.</p></button>
+    <button class="card c6" onclick="openDigraphs()"><h2>6. 🔊 Digraphs</h2><p>sh, ch, th, wh, ph, ck and more.</p></button>
+    <button class="card c7" onclick="openBlends()"><h2>7. 🔗 Consonant Blends</h2><p>bl, cl, br, cr, st, sp, tr and more.</p></button>
+    <button class="card c8" onclick="openSpelling()"><h2>8. ✏️ Spell the Word</h2><p>Hear a word and build its spelling.</p></button>
+  </div>
+  <div class="lesson" style="margin-top:10px">
+    <div class="center"><h2>📈 My Progress</h2></div>
+    <div class="progress"><span id="progressBar"></span></div>
+    <p class="center" id="progressText">Start learning!</p>
+  </div>
+</section>
 
-<!-- =========================
-     HEADER
-========================= -->
-
-<div class="header">
-
-<div class="title">
-🌟 English Word Adventure
+<section id="letters" class="screen">
+<div class="lesson">
+ <div class="topbar"><button class="back" onclick="goHome()">← Home</button><h2>🔤 First Sounds</h2><button class="sound-btn" onclick="speakCurrentLetter()">🔊</button></div>
+ <div class="big-letter" id="bigLetter">A</div>
+ <div class="sound-text" id="letterSound">/ă/</div>
+ <div class="picture" id="letterPic">🍎</div>
+ <div class="word" id="letterWord">apple</div>
+ <p class="tap-note">Tap 🔊 to hear the sound and word.</p>
+ <div class="letter-grid" id="letterGrid"></div>
+ <div class="navrow"><button onclick="prevLetter()">← Previous</button><button onclick="nextLetter()">Next →</button></div>
 </div>
+</section>
 
-<div class="subtitle">
-Learn • Read • Blend • Spell
+<section id="vowels" class="screen">
+<div class="lesson">
+ <div class="topbar"><button class="back" onclick="goHome()">← Home</button><h2 id="vowelTitle">Short Vowels</h2><button class="sound-btn" onclick="speakVowel()">🔊</button></div>
+ <div class="vowels" id="vowelButtons"></div>
+ <div class="example-box">
+   <div class="big-letter" style="font-size:75px" id="vowelLetter">a</div>
+   <div class="sound-text" id="vowelSound">/ă/</div>
+   <div class="picture" id="vowelPic">🍎</div>
+   <div class="word" id="vowelWord">apple</div>
+   <div class="example-list" id="vowelExamples"></div>
+ </div>
 </div>
+</section>
 
+<section id="blend" class="screen">
+<div class="lesson">
+ <div class="topbar"><button class="back" onclick="goHome()">← Home</button><h2>🧩 CVC Blending</h2><button class="sound-btn" onclick="speakBlend()">🔊</button></div>
+ <p class="center">Tap each sound, then blend them!</p>
+ <div class="blend-letters" id="blendLetters"></div>
+ <div class="blend-word" id="blendWord">cat</div>
+ <div class="picture" id="blendPic">🐱</div>
+ <div class="navrow"><button onclick="prevBlend()">←</button><button onclick="speakBlend()">🔊 Hear</button><button onclick="nextBlend()">→</button></div>
+ <div class="message" id="blendMsg"></div>
 </div>
+</section>
 
-
-<!-- =========================
-     HUD
-========================= -->
-
-<div class="hud">
-
-<div class="hudBox">
-⭐ Stars
-<span class="hudValue" id="stars">
-0
-</span>
+<section id="families" class="screen">
+<div class="lesson">
+ <div class="topbar"><button class="back" onclick="goHome()">← Home</button><h2>🏠 Word Families</h2><button class="sound-btn" onclick="speakFamily()">🔊</button></div>
+ <div class="family-tabs" id="familyTabs"></div>
+ <div class="family-word" id="familyWord">cat</div>
+ <p class="center">Build and read words with the same ending.</p>
+ <div class="example-list" id="familyWords"></div>
+ <div class="message" id="familyMsg"></div>
 </div>
+</section>
 
-<div class="hudBox">
-🪙 Coins
-<span class="hudValue" id="coins">
-0
-</span>
+<section id="digraphs" class="screen">
+<div class="lesson">
+ <div class="topbar"><button class="back" onclick="goHome()">← Home</button><h2>🔊 Digraphs</h2><button class="sound-btn" onclick="speakDigraph()">🔊</button></div>
+ <div class="family-tabs" id="digraphTabs"></div>
+ <div class="example-box">
+   <div class="big-letter" style="font-size:72px;color:#1976d2" id="digraphText">sh</div>
+   <div class="sound-text" id="digraphSound">/sh/</div>
+   <div class="picture" id="digraphPic">🚢</div>
+   <div class="word" id="digraphWord">ship</div>
+   <p><b>Two letters work together to make one sound.</b></p>
+   <div class="example-list" id="digraphExamples"></div>
+ </div>
 </div>
+</section>
 
-<div class="hudBox">
-🏆 Level
-<span class="hudValue" id="level">
-1
-</span>
+<section id="blends" class="screen">
+<div class="lesson">
+ <div class="topbar"><button class="back" onclick="goHome()">← Home</button><h2>🔗 Consonant Blends</h2><button class="sound-btn" onclick="speakBlendGroup()">🔊</button></div>
+ <div class="family-tabs" id="blendTabs"></div>
+ <div class="example-box">
+   <div class="big-letter" style="font-size:72px;color:#ef6c00" id="blendGroupText">bl</div>
+   <div class="sound-text" id="blendGroupSound">/b/ + /l/</div>
+   <div class="word" id="blendGroupWord">black</div>
+   <div class="example-list" id="blendGroupExamples"></div>
+   <p><b>In a blend, you can hear both consonant sounds.</b></p>
+ </div>
 </div>
+</section>
 
+<section id="spelling" class="screen">
+<div class="lesson">
+ <div class="topbar"><button class="back" onclick="goHome()">← Home</button><h2>✏️ Spell the Word</h2><button class="sound-btn" onclick="hearSpellingWord()">🔊</button></div>
+ <p class="center">Listen carefully. Choose the letters in order.</p>
+ <div class="picture" id="spellPic">🐱</div>
+ <div class="spell-word" id="spellHint">_ _ _</div>
+ <div class="answer" id="spellAnswer"></div>
+ <div class="keyboard" id="keyboard"></div>
+ <div class="message" id="spellMsg"></div>
+ <div class="navrow"><button onclick="newSpellingWord()">🔄 New Word</button></div>
 </div>
+</section>
 
-
-<!-- =========================
-     HOME MENU
-========================= -->
-
-<div id="menu">
-
-<button
-class="menuBtn phonics"
-onclick="startPhonics()">
-
-🔤 Learn Letter Sounds
-
-</button>
-
-<button
-class="menuBtn blending"
-onclick="startBlending()">
-
-🧩 Blend the Sounds
-
-</button>
-
-<button
-class="menuBtn reading"
-onclick="startReading()">
-
-📖 Read Simple Words
-
-</button>
-
-<button
-class="menuBtn spelling"
-onclick="startSpelling()">
-
-✏️ Spell the Word
-
-</button>
-
-<div class="card">
-
-<h3>🏆 Your Progress</h3>
-
-<div class="progress">
-<div
-class="progressBar"
-id="progressBar">
+<footer>🌟 Phonics foundation • Reading • Spelling</footer>
 </div>
-</div>
-
-<p id="progressText">
-Keep learning!
-</p>
-
-</div>
-
-</div>
-
-
-<!-- =========================
-     GAME AREA
-========================= -->
-
-<div id="game">
-
-<div class="card">
-
-<div id="gameTitle"></div>
-
-<div id="gameContent"></div>
-
-<div
-class="feedback"
-id="feedback">
-</div>
-
-<button
-class="nextBtn hidden"
-id="nextBtn"
-onclick="nextQuestion()">
-
-➡️ Next
-
-</button>
-
-</div>
-
-<button
-class="backBtn"
-onclick="goHome()">
-
-🏠 Home
-
-</button>
-
-</div>
-
-
-<p class="small">
-Made for young English learners 🌈
-</p>
-
-</div>
-
 
 <script>
-
-/* =========================
-   DATA
-========================= */
-
-const phonics = [
-
-{
-letter:"A",
-sound:"a",
-word:"Apple",
-emoji:"🍎"
-},
-
-{
-letter:"B",
-sound:"b",
-word:"Ball",
-emoji:"⚽"
-},
-
-{
-letter:"C",
-sound:"k",
-word:"Cat",
-emoji:"🐱"
-},
-
-{
-letter:"D",
-sound:"d",
-word:"Dog",
-emoji:"🐶"
-},
-
-{
-letter:"E",
-sound:"e",
-word:"Egg",
-emoji:"🥚"
-},
-
-{
-letter:"F",
-sound:"f",
-word:"Fish",
-emoji:"🐟"
-},
-
-{
-letter:"G",
-sound:"g",
-word:"Goat",
-emoji:"🐐"
-},
-
-{
-letter:"H",
-sound:"h",
-word:"Hat",
-emoji:"🎩"
-},
-
-{
-letter:"I",
-sound:"i",
-word:"Igloo",
-emoji:"🏠"
-},
-
-{
-letter:"J",
-sound:"j",
-word:"Jam",
-emoji:"🍓"
-},
-
-{
-letter:"K",
-sound:"k",
-word:"Kite",
-emoji:"🪁"
-},
-
-{
-letter:"L",
-sound:"l",
-word:"Lion",
-emoji:"🦁"
-},
-
-{
-letter:"M",
-sound:"m",
-word:"Moon",
-emoji:"🌙"
-},
-
-{
-letter:"N",
-sound:"n",
-word:"Nest",
-emoji:"🪺"
-},
-
-{
-letter:"O",
-sound:"o",
-word:"Orange",
-emoji:"🍊"
-},
-
-{
-letter:"P",
-sound:"p",
-word:"Pen",
-emoji:"🖊️"
-},
-
-{
-letter:"Q",
-sound:"kw",
-word:"Queen",
-emoji:"👑"
-},
-
-{
-letter:"R",
-sound:"r",
-word:"Rabbit",
-emoji:"🐰"
-},
-
-{
-letter:"S",
-sound:"s",
-word:"Sun",
-emoji:"☀️"
-},
-
-{
-letter:"T",
-sound:"t",
-word:"Tiger",
-emoji:"🐯"
-},
-
-{
-letter:"U",
-sound:"u",
-word:"Umbrella",
-emoji:"☂️"
-},
-
-{
-letter:"V",
-sound:"v",
-word:"Van",
-emoji:"🚐"
-},
-
-{
-letter:"W",
-sound:"w",
-word:"Water",
-emoji:"💧"
-},
-
-{
-letter:"X",
-sound:"ks",
-word:"Box",
-emoji:"📦"
-},
-
-{
-letter:"Y",
-sound:"y",
-word:"Yak",
-emoji:"🐂"
-},
-
-{
-letter:"Z",
-sound:"z",
-word:"Zebra",
-emoji:"🦓"
-}
-
+const A=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+const letters=[
+['a','/ă/','apple','🍎'],['b','/b/','ball','⚽'],['c','/k/','cat','🐱'],['d','/d/','dog','🐶'],
+['e','/ĕ/','egg','🥚'],['f','/f/','fish','🐟'],['g','/g/','goat','🐐'],['h','/h/','hat','🎩'],
+['i','/ĭ/','igloo','🏠'],['j','/j/','jam','🍓'],['k','/k/','kite','🪁'],['l','/l/','lion','🦁'],
+['m','/m/','moon','🌙'],['n','/n/','nest','🪺'],['o','/ŏ/','octopus','🐙'],['p','/p/','pig','🐷'],
+['q','/kw/','queen','👑'],['r','/r/','rabbit','🐰'],['s','/s/','sun','☀️'],['t','/t/','tiger','🐯'],
+['u','/ŭ/','umbrella','☂️'],['v','/v/','van','🚐'],['w','/w/','water','💧'],['x','/ks/','box','📦'],
+['y','/y/','yo-yo','🪀'],['z','/z/','zebra','🦓']
 ];
 
-
-/* =========================
-   CVC WORDS
-========================= */
-
-const words=[
-
-{
-word:"CAT",
-emoji:"🐱",
-letters:["C","A","T"]
-},
-
-{
-word:"BAT",
-emoji:"🦇",
-letters:["B","A","T"]
-},
-
-{
-word:"HAT",
-emoji:"🎩",
-letters:["H","A","T"]
-},
-
-{
-word:"SUN",
-emoji:"☀️",
-letters:["S","U","N"]
-},
-
-{
-word:"PEN",
-emoji:"🖊️",
-letters:["P","E","N"]
-},
-
-{
-word:"BED",
-emoji:"🛏️",
-letters:["B","E","D"]
-},
-
-{
-word:"DOG",
-emoji:"🐶",
-letters:["D","O","G"]
-},
-
-{
-word:"FOX",
-emoji:"🦊",
-letters:["F","O","X"]
-},
-
-{
-word:"CUP",
-emoji:"🥤",
-letters:["C","U","P"]
-},
-
-{
-word:"BUS",
-emoji:"🚌",
-letters:["B","U","S"]
-},
-
-{
-word:"MAP",
-emoji:"🗺️",
-letters:["M","A","P"]
-},
-
-{
-word:"HEN",
-emoji:"🐔",
-letters:["H","E","N"]
-},
-
-{
-word:"PIG",
-emoji:"🐷",
-letters:["P","I","G"]
-},
-
-{
-word:"BIG",
-emoji:"🐘",
-letters:["B","I","G"]
-},
-
-{
-word:"TOP",
-emoji:"🔝",
-letters:["T","O","P"]
-}
-
+const shortVowels=[
+{v:'a',s:'/ă/',w:'apple',p:'🍎',ex:['cat','map','bag']},
+{v:'e',s:'/ĕ/',w:'egg',p:'🥚',ex:['bed','hen','red']},
+{v:'i',s:'/ĭ/',w:'igloo',p:'🏠',ex:['pig','sit','pin']},
+{v:'o',s:'/ŏ/',w:'octopus',p:'🐙',ex:['hot','log','dog']},
+{v:'u',s:'/ŭ/',w:'umbrella',p:'☂️',ex:['sun','cup','bug']}
+];
+const longVowels=[
+{v:'a',s:'/ā/',w:'cake',p:'🍰',ex:['cake','game','name']},
+{v:'e',s:'/ē/',w:'these',p:'👉',ex:['these','theme','complete']},
+{v:'i',s:'/ī/',w:'bike',p:'🚲',ex:['bike','kite','time']},
+{v:'o',s:'/ō/',w:'home',p:'🏠',ex:['home','rope','hope']},
+{v:'u',s:'/ū/ or /yū/',w:'cube',p:'🧊',ex:['cube','cute','tube']}
 ];
 
-
-/* =========================
-   GAME STATE
-========================= */
-
-let stars=
-Number(localStorage.getItem(
-"englishStars")||0);
-
-let coins=
-Number(localStorage.getItem(
-"englishCoins")||0);
-
-let level=
-Number(localStorage.getItem(
-"englishLevel")||1);
-
-let currentMode="";
-let currentIndex=0;
-let answered=false;
-
-
-/* =========================
-   HUD
-========================= */
-
-function updateHUD(){
-
-document.getElementById(
-"stars"
-).textContent=stars;
-
-document.getElementById(
-"coins"
-).textContent=coins;
-
-document.getElementById(
-"level"
-).textContent=level;
-
-localStorage.setItem(
-"englishStars",
-stars
-);
-
-localStorage.setItem(
-"englishCoins",
-coins
-);
-
-localStorage.setItem(
-"englishLevel",
-level
-);
-
-}
-
-
-/* =========================
-   SPEECH
-========================= */
-
-function speak(text){
-
-if(!("speechSynthesis" in window)){
-return;
-}
-
-speechSynthesis.cancel();
-
-const utterance=
-new SpeechSynthesisUtterance(text);
-
-utterance.lang="en-US";
-
-utterance.rate=.75;
-
-utterance.pitch=1.05;
-
-speechSynthesis.speak(
-utterance
-);
-
-}
-
-
-/* =========================
-   HOME
-========================= */
-
-function goHome(){
-
-document.getElementById(
-"menu"
-).style.display="block";
-
-document.getElementById(
-"game"
-).style.display="none";
-
-updateProgress();
-
-}
-
-
-/* =========================
-   PHONICS
-========================= */
-
-function startPhonics(){
-
-currentMode="phonics";
-
-currentIndex=0;
-
-showGame();
-
-showPhonics();
-
-}
-
-
-/* =========================
-   SHOW PHONICS
-========================= */
-
-function showPhonics(){
-
-const item=
-phonics[currentIndex];
-
-document.getElementById(
-"gameTitle"
-).innerHTML=
-"<h2>🔤 Letter Sound</h2>";
-
-document.getElementById(
-"gameContent"
-).innerHTML=`
-
-<div class="bigLetter">
-${item.letter}
-</div>
-
-<div class="picture">
-${item.emoji}
-</div>
-
-<h3>
-${item.word}
-</h3>
-
-<p>
-Sound:
-<strong>${item.sound}</strong>
-</p>
-
-<button
-class="soundBtn"
-onclick="speak('${item.sound}')">
-🔊
-</button>
-
-<div class="alphabet">
-
-${phonics.map(
-(p,i)=>`
-
-<button
-class="letterBtn"
-onclick="phonicsJump(${i})">
-
-${p.letter}
-
-</button>
-
-`).join("")}
-
-</div>
-`;
-
-document.getElementById(
-"feedback"
-).textContent="";
-
-document.getElementById(
-"nextBtn"
-).classList.remove(
-"hidden"
-);
-
-document.getElementById(
-"nextBtn"
-).textContent=
-"➡️ Next Letter";
-
-}
-
-
-/* =========================
-   PHONICS JUMP
-========================= */
-
-function phonicsJump(i){
-
-currentIndex=i;
-
-showPhonics();
-
-}
-
-
-/* =========================
-   BLENDING
-========================= */
-
-function startBlending(){
-
-currentMode="blending";
-
-currentIndex=0;
-
-showGame();
-
-showBlend();
-
-}
-
-
-/* =========================
-   SHOW BLEND
-========================= */
-
-function showBlend(){
-
-const item=
-words[currentIndex];
-
-document.getElementById(
-"gameTitle"
-).innerHTML=
-"<h2>🧩 Blend the Sounds</h2>";
-
-document.getElementById(
-"gameContent"
-).innerHTML=`
-
-<div class="picture">
-${item.emoji}
-</div>
-
-<h3>
-Blend these sounds:
-</h3>
-
-<div class="word">
-${item.letters.join(" + ")}
-</div>
-
-<button
-class="soundBtn"
-onclick="speak(
-'${item.letters.join(' ')}'
-)">
-🔊
-</button>
-
-<p>
-What word do they make?
-</p>
-
-<button
-class="nextBtn"
-onclick="revealBlend()">
-
-✨ Show Word
-
-</button>
-`;
-
-document.getElementById(
-"feedback"
-).textContent="";
-
-document.getElementById(
-"nextBtn"
-).classList.add(
-"hidden"
-);
-
-}
-
-
-/* =========================
-   REVEAL BLEND
-========================= */
-
-function revealBlend(){
-
-const item=
-words[currentIndex];
-
-document.getElementById(
-"feedback"
-).innerHTML=
-`🎉 ${item.letters.join(" + ")}
-→ <strong>${item.word}</strong>`;
-
-speak(item.word);
-
-stars+=5;
-coins+=2;
-
-updateHUD();
-
-document.getElementById(
-"nextBtn"
-).classList.remove(
-"hidden"
-);
-
-document.getElementById(
-"nextBtn"
-).textContent=
-"➡️ Next Word";
-
-}
-
-
-/* =========================
-   READING
-========================= */
-
-function startReading(){
-
-currentMode="reading";
-
-currentIndex=0;
-
-showGame();
-
-showReading();
-
-}
-
-
-/* =========================
-   SHOW READING
-========================= */
-
-function showReading(){
-
-const item=
-words[currentIndex];
-
-document.getElementById(
-"gameTitle"
-).innerHTML=
-"<h2>📖 Read the Word</h2>";
-
-document.getElementById(
-"gameContent"
-).innerHTML=`
-
-<div class="picture">
-${item.emoji}
-</div>
-
-<div class="word">
-${item.word}
-</div>
-
-<button
-class="soundBtn"
-onclick="speak('${item.word}')">
-
-🔊
-
-</button>
-
-<p>
-Tap the speaker and read aloud!
-</p>
-
-<button
-class="nextBtn"
-onclick="readingDone()">
-
-⭐ I Read It!
-
-</button>
-
-`;
-
-document.getElementById(
-"feedback"
-).textContent="";
-
-document.getElementById(
-"nextBtn"
-).classList.add(
-"hidden"
-);
-
-}
-
-
-/* =========================
-   READING DONE
-========================= */
-
-function readingDone(){
-
-stars+=5;
-coins+=1;
-
-updateHUD();
-
-document.getElementById(
-"feedback"
-).textContent=
-"🌟 Great reading!";
-
-document.getElementById(
-"nextBtn"
-).classList.remove(
-"hidden"
-);
-
-document.getElementById(
-"nextBtn"
-).textContent=
-"➡️ Next Word";
-
-}
-
-
-/* =========================
-   SPELLING
-========================= */
-
-function startSpelling(){
-
-currentMode="spelling";
-
-currentIndex=0;
-
-showGame();
-
-showSpelling();
-
-}
-
-
-/* =========================
-   SHOW SPELLING
-========================= */
-
-function showSpelling(){
-
-const item=
-words[currentIndex];
-
-answered=false;
-
-const missing=
-Math.floor(
-Math.random()*item.word.length
-);
-
-const answer=
-item.word[missing];
-
-let display="";
-
-for(
-let i=0;
-i<item.word.length;
-i++
-){
-
-display+=
-i===missing
-?"_"
-:item.word[i];
-
-}
-
-let options=[
-answer
+const cvc=[
+['cat','🐱'],['bat','🦇'],['map','🗺️'],['sun','☀️'],['cup','🥤'],['bug','🐞'],
+['pig','🐷'],['sit','🪑'],['pin','📌'],['dog','🐶'],['log','🪵'],['hot','🔥'],
+['hen','🐔'],['bed','🛏️'],['red','🔴'],['fox','🦊'],['box','📦'],['mop','🧹']
 ];
 
-while(options.length<4){
+const families=[
+['-at',['cat','bat','hat','mat','rat']],['-an',['can','fan','man','pan','van']],
+['-ig',['big','dig','pig','wig']],['-in',['fin','pin','win','chin']],
+['-op',['cop','hop','mop','top']],['-og',['dog','fog','log','hog']],
+['-ug',['bug','hug','mug','rug']],['-un',['fun','sun','run','bun']],
+['-et',['get','jet','net','pet']],['-ed',['bed','red','fed','wed']]
+];
 
-const letter=
-String.fromCharCode(
-65+
-Math.floor(
-Math.random()*26
-)
-);
+const digraphs=[
+['sh','/sh/','ship','🚢',['ship','shop','fish','shell']],
+['ch','/ch/','chick','🐥',['chip','chop','chin','much']],
+['th','/th/','thumb','👍',['thin','this','that','bath']],
+['wh','/w/','whale','🐋',['whip','when','wheel','whale']],
+['ph','/f/','phone','📱',['phone','photo','graph']],
+['ck','/k/','duck','🦆',['duck','sock','back','rock']]
+];
 
-if(!options.includes(letter)){
-options.push(letter);
+const blends=[
+['bl','/b/ + /l/','black',['black','blue','blow']],
+['cl','/k/ + /l/','clap',['clap','clip','clock']],
+['fl','/f/ + /l/','flag',['flag','flip','flower']],
+['br','/b/ + /r/','brush',['brush','brick','brown']],
+['cr','/k/ + /r/','crab',['crab','crop','crayon']],
+['dr','/d/ + /r/','drum',['drum','dress','drink']],
+['st','/s/ + /t/','star',['star','stop','step']],
+['sp','/s/ + /p/','spoon',['spoon','spin','spot']],
+['tr','/t/ + /r/','tree',['tree','train','truck']]
+];
+
+const spellingWords=[
+['cat','🐱'],['dog','🐶'],['sun','☀️'],['pig','🐷'],['fish','🐟'],['ship','🚢'],
+['cake','🍰'],['bike','🚲'],['home','🏠'],['duck','🦆'],['star','⭐'],['tree','🌳']
+];
+
+let letterIndex=0,vowelMode='short',vowelIndex=0,blendIndex=0,familyIndex=0,digraphIndex=0,blendGroupIndex=0;
+let spellWord='',spellPos=0,spellScore=0;
+
+let stars=+localStorage.getItem('phonicsStars')||0;
+let coins=+localStorage.getItem('phonicsCoins')||0;
+let badges=+localStorage.getItem('phonicsBadges')||0;
+document.getElementById('stars').textContent=stars;
+document.getElementById('coins').textContent=coins;
+document.getElementById('badges').textContent=badges;
+
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
+function goHome(){show('home');updateProgress()}
+function save(){localStorage.setItem('phonicsStars',stars);localStorage.setItem('phonicsCoins',coins);localStorage.setItem('phonicsBadges',badges);document.getElementById('stars').textContent=stars;document.getElementById('coins').textContent=coins;document.getElementById('badges').textContent=badges}
+function reward(){stars++;coins+=2;if(stars%20===0)badges++;save()}
+function speak(text){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(text);u.rate=.72;u.pitch=1.08;speechSynthesis.speak(u)}
+function speakPhonics(text){speak(text)}
+
+function openLetters(){
+ show('letters');renderLetterGrid();renderLetter();
 }
-
+function renderLetterGrid(){
+ const g=document.getElementById('letterGrid');g.innerHTML='';
+ A.forEach((l,i)=>{let b=document.createElement('button');b.textContent=l.toUpperCase();if(i===letterIndex)b.className='selected';b.onclick=()=>{letterIndex=i;renderLetter()};g.appendChild(b)})
 }
-
-options.sort(
-()=>Math.random()-.5
-);
-
-document.getElementById(
-"gameTitle"
-).innerHTML=
-"<h2>✏️ Spell the Word</h2>";
-
-document.getElementById(
-"gameContent"
-).innerHTML=`
-
-<div class="picture">
-${item.emoji}
-</div>
-
-<button
-class="soundBtn"
-onclick="speak('${item.word}')">
-🔊
-</button>
-
-<div class="word">
-${display}
-</div>
-
-<p>
-Listen and choose the missing letter.
-</p>
-
-<div class="answerGrid">
-
-${options.map(
-letter=>`
-
-<button
-class="answerBtn"
-onclick="checkSpelling(
-'${letter}',
-'${answer}'
-)">
-
-${letter}
-
-</button>
-
-`).join("")}
-
-</div>
-
-`;
-
-document.getElementById(
-"feedback"
-).textContent="";
-
-document.getElementById(
-"nextBtn"
-).classList.add(
-"hidden"
-);
-
+function renderLetter(){
+ let d=letters[letterIndex];
+ document.getElementById('bigLetter').textContent=d[0].toUpperCase();
+ document.getElementById('letterSound').textContent=d[1];
+ document.getElementById('letterPic').textContent=d[3];
+ document.getElementById('letterWord').textContent=d[2];
+ renderLetterGrid();
 }
+function speakCurrentLetter(){let d=letters[letterIndex];speak('The letter '+d[0]+'. Its sound is '+d[1].replaceAll('/','')+'. '+d[2])}
+function prevLetter(){letterIndex=(letterIndex+25)%26;renderLetter()}
+function nextLetter(){letterIndex=(letterIndex+1)%26;renderLetter()}
 
-
-/* =========================
-   CHECK SPELLING
-========================= */
-
-function checkSpelling(
-selected,
-answer
-){
-
-if(answered)return;
-
-if(
-selected===answer
-){
-
-answered=true;
-
-stars+=10;
-coins+=3;
-
-document.getElementById(
-"feedback"
-).textContent=
-"🎉 Correct! Excellent spelling!";
-
-speak(
-"Correct! "+
-words[currentIndex].word
-);
-
-document.getElementById(
-"nextBtn"
-).classList.remove(
-"hidden"
-);
-
-document.getElementById(
-"nextBtn"
-).textContent=
-"➡️ Next Word";
-
-updateHUD();
-
-}else{
-
-document.getElementById(
-"feedback"
-).textContent=
-"💡 Try again!";
-
-speak("Try again");
-
+function openVowels(mode){vowelMode=mode;vowelIndex=0;show('vowels');renderVowels()}
+function renderVowels(){
+ let data=vowelMode==='short'?shortVowels:longVowels;
+ document.getElementById('vowelTitle').textContent=(vowelMode==='short'?'Short':'Long')+' Vowel Sounds';
+ const box=document.getElementById('vowelButtons');box.innerHTML='';
+ data.forEach((d,i)=>{let b=document.createElement('button');b.className='vowel';b.textContent=d.v.toUpperCase();b.onclick=()=>{vowelIndex=i;renderVowels()};if(i===vowelIndex)b.style.background='#81d4fa';box.appendChild(b)});
+ let d=data[vowelIndex];
+ document.getElementById('vowelLetter').textContent=d.v.toUpperCase();
+ document.getElementById('vowelSound').textContent=d.s;
+ document.getElementById('vowelPic').textContent=d.p;
+ document.getElementById('vowelWord').textContent=d.w;
+ let ex=document.getElementById('vowelExamples');ex.innerHTML='';
+ d.ex.forEach(w=>{let b=document.createElement('button');b.textContent=w;b.onclick=()=>speak(w);ex.appendChild(b)});
 }
+function speakVowel(){let d=(vowelMode==='short'?shortVowels:longVowels)[vowelIndex];speak(d.v+' says '+d.s+'. '+d.w)}
 
+function openBlend(){show('blend');renderBlend()}
+function renderBlend(){
+ let [word,pic]=cvc[blendIndex];
+ document.getElementById('blendWord').textContent=word;
+ document.getElementById('blendPic').textContent=pic;
+ let box=document.getElementById('blendLetters');box.innerHTML='';
+ [...word].forEach((ch,i)=>{let b=document.createElement('button');b.className='blend-letter';b.textContent=ch;b.onclick=()=>speak(ch);box.appendChild(b)});
+ document.getElementById('blendMsg').textContent='Tap each letter sound, then blend!';
 }
+function speakBlend(){let w=cvc[blendIndex][0];speak([...w].join('...')+'... '+w);reward();document.getElementById('blendMsg').textContent='🎉 Great blending!'}
+function prevBlend(){blendIndex=(blendIndex+cvc.length-1)%cvc.length;renderBlend()}
+function nextBlend(){blendIndex=(blendIndex+1)%cvc.length;renderBlend()}
 
-
-/* =========================
-   NEXT
-========================= */
-
-function nextQuestion(){
-
-currentIndex++;
-
-if(
-currentIndex>=words.length
-){
-
-currentIndex=0;
-
-level++;
-
-updateHUD();
-
-document.getElementById(
-"feedback"
-).textContent=
-"🏆 New Level!";
-
+function openFamilies(){show('families');renderFamilies()}
+function renderFamilies(){
+ let tabs=document.getElementById('familyTabs');tabs.innerHTML='';
+ families.forEach((f,i)=>{let b=document.createElement('button');b.textContent=f[0];if(i===familyIndex)b.className='active';b.onclick=()=>{familyIndex=i;renderFamilies()};tabs.appendChild(b)});
+ let f=families[familyIndex], words=f[1];
+ document.getElementById('familyWord').innerHTML=words[0].slice(0,-f[0].length+1)+'<span class="family-ending">'+f[0].replace('-','')+'</span>';
+ let box=document.getElementById('familyWords');box.innerHTML='';
+ words.forEach(w=>{let b=document.createElement('button');b.textContent=w;b.onclick=()=>{speak(w);document.getElementById('familyMsg').textContent='🔊 '+w};box.appendChild(b)})
 }
+function speakFamily(){let w=families[familyIndex][1][0];speak(w);reward()}
 
-if(currentMode==="phonics"){
-showPhonics();
+function openDigraphs(){show('digraphs');renderDigraphs()}
+function renderDigraphs(){
+ let tabs=document.getElementById('digraphTabs');tabs.innerHTML='';
+ digraphs.forEach((d,i)=>{let b=document.createElement('button');b.textContent=d[0];if(i===digraphIndex)b.className='active';b.onclick=()=>{digraphIndex=i;renderDigraphs()};tabs.appendChild(b)});
+ let d=digraphs[digraphIndex];
+ document.getElementById('digraphText').textContent=d[0];
+ document.getElementById('digraphSound').textContent=d[1];
+ document.getElementById('digraphWord').textContent=d[2];
+ document.getElementById('digraphPic').textContent=d[3];
+ let ex=document.getElementById('digraphExamples');ex.innerHTML='';
+ d[4].forEach(w=>{let b=document.createElement('button');b.textContent=w;b.onclick=()=>speak(w);ex.appendChild(b)})
 }
+function speakDigraph(){let d=digraphs[digraphIndex];speak(d[0]+' says '+d[1]+'. '+d[2]);reward()}
 
-if(currentMode==="blending"){
-showBlend();
+function openBlends(){show('blends');renderBlendGroups()}
+function renderBlendGroups(){
+ let tabs=document.getElementById('blendTabs');tabs.innerHTML='';
+ blends.forEach((d,i)=>{let b=document.createElement('button');b.textContent=d[0];if(i===blendGroupIndex)b.className='active';b.onclick=()=>{blendGroupIndex=i;renderBlendGroups()};tabs.appendChild(b)});
+ let d=blends[blendGroupIndex];
+ document.getElementById('blendGroupText').textContent=d[0];
+ document.getElementById('blendGroupSound').textContent=d[1];
+ document.getElementById('blendGroupWord').textContent=d[2];
+ let ex=document.getElementById('blendGroupExamples');ex.innerHTML='';
+ d[3].forEach(w=>{let b=document.createElement('button');b.textContent=w;b.onclick=()=>speak(w);ex.appendChild(b)})
 }
+function speakBlendGroup(){let d=blends[blendGroupIndex];speak(d[0]+'. '+d[1]+'. '+d[2]);reward()}
 
-if(currentMode==="reading"){
-showReading();
+function openSpelling(){show('spelling');newSpellingWord()}
+function newSpellingWord(){
+ let d=spellingWords[Math.floor(Math.random()*spellingWords.length)];
+ spellWord=d[0];spellPos=0;
+ document.getElementById('spellPic').textContent=d[1];
+ document.getElementById('spellMsg').textContent='';
+ renderSpelling();
+ setTimeout(hearSpellingWord,250);
 }
-
-if(currentMode==="spelling"){
-showSpelling();
+function renderSpelling(){
+ let hint=[...spellWord].map((c,i)=>i<spellPos?c.toUpperCase():'_').join(' ');
+ document.getElementById('spellHint').textContent=hint;
+ let ans=document.getElementById('spellAnswer');ans.innerHTML='';
+ for(let i=0;i<spellPos;i++){let b=document.createElement('button');b.textContent=spellWord[i].toUpperCase();b.style.background='#c8e6c9';ans.appendChild(b)}
+ let kb=document.getElementById('keyboard');kb.innerHTML='';
+ let pool=A.slice().sort(()=>Math.random()-.5);
+ [...spellWord].forEach(ch=>{if(!pool.includes(ch))pool.push(ch)});
+ pool.slice(0,21).forEach(ch=>{let b=document.createElement('button');b.textContent=ch.toUpperCase();b.onclick=()=>chooseSpell(ch);kb.appendChild(b)})
 }
-
+function chooseSpell(ch){
+ if(ch===spellWord[spellPos]){
+   spellPos++;
+   if(spellPos===spellWord.length){
+     document.getElementById('spellMsg').textContent='🎉 Correct! '+spellWord.toUpperCase();
+     speak('Correct! '+spellWord);
+     reward();
+     setTimeout(newSpellingWord,1100);
+   }else{document.getElementById('spellMsg').textContent='✅ Good!';speak(ch)}
+ }else{
+   document.getElementById('spellMsg').textContent='Try again. Listen to the word.';
+   speak(ch);
+ }
+ renderSpelling();
 }
-
-
-/* =========================
-   SHOW GAME
-========================= */
-
-function showGame(){
-
-document.getElementById(
-"menu"
-).style.display="none";
-
-document.getElementById(
-"game"
-).style.display="block";
-
-updateHUD();
-
-}
-
-
-/* =========================
-   PROGRESS
-========================= */
+function hearSpellingWord(){speak(spellWord)}
 
 function updateProgress(){
-
-const total=26+words.length*3;
-
-const progress=
-Math.min(
-100,
-(stars/total)*100
-);
-
-document.getElementById(
-"progressBar"
-).style.width=
-progress+"%";
-
-document.getElementById(
-"progressText"
-).textContent=
-stars>50
-?"🌟 Amazing progress!"
-:"Keep learning and earn stars!";
-
+ let done=Math.min(100,Math.round((stars%101)));
+ document.getElementById('progressBar').style.width=done+'%';
+ document.getElementById('progressText').textContent=stars?stars+' stars earned — keep learning!':'Start learning and earn stars!';
 }
 
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape')goHome();
+});
 
-/* =========================
-   START
-========================= */
-
-updateHUD();
 updateProgress();
-
 </script>
-
 </body>
-  </html>
+</html>

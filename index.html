@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0, user-scalable=no">
+
+<title>🌟 English Word Adventure</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(160deg,#4527a0,#7b1fa2,#ec407a);
+  color:#fff;
+  touch-action:manipulation;
+}
+
+body{
+  display:flex;
+  justify-content:center;
+}
+
+#app{
+  width:100%;
+  max-width:430px;
+  min-height:100vh;
+  padding:12px;
+  text-align:center;
+}
+
+/* HEADER */
+
+.header{
+  background:rgba(255,255,255,.14);
+  border-radius:20px;
+  padding:12px;
+  box-shadow:0 5px 20px #0004;
+}
+
+.title{
+  font-size:28px;
+  font-weight:bold;
+  margin:3px 0;
+  background:linear-gradient(
+    90deg,
+    #ffeb3b,
+    #00e5ff,
+    #76ff03,
+    #ff80ab
+  );
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.subtitle{
+  font-size:13px;
+  opacity:.9;
+}
+
+/* HUD */
+
+.hud{
+  display:flex;
+  justify-content:space-around;
+  margin:12px 0;
+  gap:5px;
+}
+
+.hudBox{
+  flex:1;
+  background:#0004;
+  border-radius:14px;
+  padding:8px 3px;
+  font-size:13px;
+}
+
+.hudValue{
+  display:block;
+  font-size:18px;
+  font-weight:bold;
+  color:#ffeb3b;
+}
+
+/* MENU */
+
+#menu{
+  margin-top:12px;
+}
+
+.menuBtn{
+  width:100%;
+  border:none;
+  margin:7px 0;
+  padding:16px;
+  border-radius:18px;
+  font-size:19px;
+  font-weight:bold;
+  color:white;
+  box-shadow:0 5px 12px #0005;
+  cursor:pointer;
+}
+
+.phonics{
+  background:linear-gradient(135deg,#00bcd4,#2979ff);
+}
+
+.blending{
+  background:linear-gradient(135deg,#00c853,#64dd17);
+}
+
+.reading{
+  background:linear-gradient(135deg,#ff9100,#ff3d00);
+}
+
+.spelling{
+  background:linear-gradient(135deg,#d500f9,#aa00ff);
+}
+
+/* GAME */
+
+#game{
+  display:none;
+}
+
+.card{
+  background:#ffffff;
+  color:#333;
+  border-radius:24px;
+  padding:20px 12px;
+  margin-top:12px;
+  box-shadow:0 7px 20px #0005;
+}
+
+.bigLetter{
+  font-size:90px;
+  font-weight:bold;
+  color:#7b1fa2;
+  margin:5px;
+}
+
+.word{
+  font-size:40px;
+  font-weight:bold;
+  color:#2979ff;
+  margin:12px;
+}
+
+.picture{
+  font-size:80px;
+  margin:5px;
+}
+
+.soundBtn{
+  border:none;
+  border-radius:50%;
+  width:65px;
+  height:65px;
+  font-size:30px;
+  background:#ffca28;
+  box-shadow:0 5px 10px #0004;
+}
+
+.answerGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:15px;
+}
+
+.answerBtn{
+  border:none;
+  border-radius:15px;
+  padding:16px;
+  font-size:22px;
+  font-weight:bold;
+  background:#e3f2fd;
+  color:#1565c0;
+}
+
+.answerBtn:active{
+  transform:scale(.95);
+}
+
+.feedback{
+  min-height:28px;
+  margin-top:10px;
+  font-size:18px;
+  font-weight:bold;
+}
+
+.nextBtn{
+  border:none;
+  background:#00c853;
+  color:white;
+  padding:13px 25px;
+  border-radius:14px;
+  font-size:18px;
+  font-weight:bold;
+  margin-top:10px;
+}
+
+.backBtn{
+  border:none;
+  background:#424242;
+  color:white;
+  padding:10px 20px;
+  border-radius:12px;
+  font-size:15px;
+  margin-top:12px;
+}
+
+/* PROGRESS */
+
+.progress{
+  height:12px;
+  background:#ddd;
+  border-radius:20px;
+  overflow:hidden;
+  margin:15px 0;
+}
+
+.progressBar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(
+    90deg,#00c853,#76ff03
+  );
+}
+
+/* ALPHABET */
+
+.alphabet{
+  display:grid;
+  grid-template-columns:
+    repeat(5,1fr);
+  gap:7px;
+  margin-top:15px;
+}
+
+.letterBtn{
+  border:none;
+  border-radius:12px;
+  padding:12px 5px;
+  background:#ede7f6;
+  color:#512da8;
+  font-size:20px;
+  font-weight:bold;
+}
+
+.letterBtn:active{
+  transform:scale(.92);
+}
+
+/* HIDDEN */
+
+.hidden{
+  display:none;
+}
+
+.small{
+  font-size:12px;
+  opacity:.7;
+  margin-top:15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="app">
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<div class="header">
+
+<div class="title">
+🌟 English Word Adventure
+</div>
+
+<div class="subtitle">
+Learn • Read • Blend • Spell
+</div>
+
+</div>
+
+
+<!-- =========================
+     HUD
+========================= -->
+
+<div class="hud">
+
+<div class="hudBox">
+⭐ Stars
+<span class="hudValue" id="stars">
+0
+</span>
+</div>
+
+<div class="hudBox">
+🪙 Coins
+<span class="hudValue" id="coins">
+0
+</span>
+</div>
+
+<div class="hudBox">
+🏆 Level
+<span class="hudValue" id="level">
+1
+</span>
+</div>
+
+</div>
+
+
+<!-- =========================
+     HOME MENU
+========================= -->
+
+<div id="menu">
+
+<button
+class="menuBtn phonics"
+onclick="startPhonics()">
+
+🔤 Learn Letter Sounds
+
+</button>
+
+<button
+class="menuBtn blending"
+onclick="startBlending()">
+
+🧩 Blend the Sounds
+
+</button>
+
+<button
+class="menuBtn reading"
+onclick="startReading()">
+
+📖 Read Simple Words
+
+</button>
+
+<button
+class="menuBtn spelling"
+onclick="startSpelling()">
+
+✏️ Spell the Word
+
+</button>
+
+<div class="card">
+
+<h3>🏆 Your Progress</h3>
+
+<div class="progress">
+<div
+class="progressBar"
+id="progressBar">
+</div>
+</div>
+
+<p id="progressText">
+Keep learning!
+</p>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     GAME AREA
+========================= -->
+
+<div id="game">
+
+<div class="card">
+
+<div id="gameTitle"></div>
+
+<div id="gameContent"></div>
+
+<div
+class="feedback"
+id="feedback">
+</div>
+
+<button
+class="nextBtn hidden"
+id="nextBtn"
+onclick="nextQuestion()">
+
+➡️ Next
+
+</button>
+
+</div>
+
+<button
+class="backBtn"
+onclick="goHome()">
+
+🏠 Home
+
+</button>
+
+</div>
+
+
+<p class="small">
+Made for young English learners 🌈
+</p>
+
+</div>
+
+
+<script>
+
+/* =========================
+   DATA
+========================= */
+
+const phonics = [
+
+{
+letter:"A",
+sound:"a",
+word:"Apple",
+emoji:"🍎"
+},
+
+{
+letter:"B",
+sound:"b",
+word:"Ball",
+emoji:"⚽"
+},
+
+{
+letter:"C",
+sound:"k",
+word:"Cat",
+emoji:"🐱"
+},
+
+{
+letter:"D",
+sound:"d",
+word:"Dog",
+emoji:"🐶"
+},
+
+{
+letter:"E",
+sound:"e",
+word:"Egg",
+emoji:"🥚"
+},
+
+{
+letter:"F",
+sound:"f",
+word:"Fish",
+emoji:"🐟"
+},
+
+{
+letter:"G",
+sound:"g",
+word:"Goat",
+emoji:"🐐"
+},
+
+{
+letter:"H",
+sound:"h",
+word:"Hat",
+emoji:"🎩"
+},
+
+{
+letter:"I",
+sound:"i",
+word:"Igloo",
+emoji:"🏠"
+},
+
+{
+letter:"J",
+sound:"j",
+word:"Jam",
+emoji:"🍓"
+},
+
+{
+letter:"K",
+sound:"k",
+word:"Kite",
+emoji:"🪁"
+},
+
+{
+letter:"L",
+sound:"l",
+word:"Lion",
+emoji:"🦁"
+},
+
+{
+letter:"M",
+sound:"m",
+word:"Moon",
+emoji:"🌙"
+},
+
+{
+letter:"N",
+sound:"n",
+word:"Nest",
+emoji:"🪺"
+},
+
+{
+letter:"O",
+sound:"o",
+word:"Orange",
+emoji:"🍊"
+},
+
+{
+letter:"P",
+sound:"p",
+word:"Pen",
+emoji:"🖊️"
+},
+
+{
+letter:"Q",
+sound:"kw",
+word:"Queen",
+emoji:"👑"
+},
+
+{
+letter:"R",
+sound:"r",
+word:"Rabbit",
+emoji:"🐰"
+},
+
+{
+letter:"S",
+sound:"s",
+word:"Sun",
+emoji:"☀️"
+},
+
+{
+letter:"T",
+sound:"t",
+word:"Tiger",
+emoji:"🐯"
+},
+
+{
+letter:"U",
+sound:"u",
+word:"Umbrella",
+emoji:"☂️"
+},
+
+{
+letter:"V",
+sound:"v",
+word:"Van",
+emoji:"🚐"
+},
+
+{
+letter:"W",
+sound:"w",
+word:"Water",
+emoji:"💧"
+},
+
+{
+letter:"X",
+sound:"ks",
+word:"Box",
+emoji:"📦"
+},
+
+{
+letter:"Y",
+sound:"y",
+word:"Yak",
+emoji:"🐂"
+},
+
+{
+letter:"Z",
+sound:"z",
+word:"Zebra",
+emoji:"🦓"
+}
+
+];
+
+
+/* =========================
+   CVC WORDS
+========================= */
+
+const words=[
+
+{
+word:"CAT",
+emoji:"🐱",
+letters:["C","A","T"]
+},
+
+{
+word:"BAT",
+emoji:"🦇",
+letters:["B","A","T"]
+},
+
+{
+word:"HAT",
+emoji:"🎩",
+letters:["H","A","T"]
+},
+
+{
+word:"SUN",
+emoji:"☀️",
+letters:["S","U","N"]
+},
+
+{
+word:"PEN",
+emoji:"🖊️",
+letters:["P","E","N"]
+},
+
+{
+word:"BED",
+emoji:"🛏️",
+letters:["B","E","D"]
+},
+
+{
+word:"DOG",
+emoji:"🐶",
+letters:["D","O","G"]
+},
+
+{
+word:"FOX",
+emoji:"🦊",
+letters:["F","O","X"]
+},
+
+{
+word:"CUP",
+emoji:"🥤",
+letters:["C","U","P"]
+},
+
+{
+word:"BUS",
+emoji:"🚌",
+letters:["B","U","S"]
+},
+
+{
+word:"MAP",
+emoji:"🗺️",
+letters:["M","A","P"]
+},
+
+{
+word:"HEN",
+emoji:"🐔",
+letters:["H","E","N"]
+},
+
+{
+word:"PIG",
+emoji:"🐷",
+letters:["P","I","G"]
+},
+
+{
+word:"BIG",
+emoji:"🐘",
+letters:["B","I","G"]
+},
+
+{
+word:"TOP",
+emoji:"🔝",
+letters:["T","O","P"]
+}
+
+];
+
+
+/* =========================
+   GAME STATE
+========================= */
+
+let stars=
+Number(localStorage.getItem(
+"englishStars")||0);
+
+let coins=
+Number(localStorage.getItem(
+"englishCoins")||0);
+
+let level=
+Number(localStorage.getItem(
+"englishLevel")||1);
+
+let currentMode="";
+let currentIndex=0;
+let answered=false;
+
+
+/* =========================
+   HUD
+========================= */
+
+function updateHUD(){
+
+document.getElementById(
+"stars"
+).textContent=stars;
+
+document.getElementById(
+"coins"
+).textContent=coins;
+
+document.getElementById(
+"level"
+).textContent=level;
+
+localStorage.setItem(
+"englishStars",
+stars
+);
+
+localStorage.setItem(
+"englishCoins",
+coins
+);
+
+localStorage.setItem(
+"englishLevel",
+level
+);
+
+}
+
+
+/* =========================
+   SPEECH
+========================= */
+
+function speak(text){
+
+if(!("speechSynthesis" in window)){
+return;
+}
+
+speechSynthesis.cancel();
+
+const utterance=
+new SpeechSynthesisUtterance(text);
+
+utterance.lang="en-US";
+
+utterance.rate=.75;
+
+utterance.pitch=1.05;
+
+speechSynthesis.speak(
+utterance
+);
+
+}
+
+
+/* =========================
+   HOME
+========================= */
+
+function goHome(){
+
+document.getElementById(
+"menu"
+).style.display="block";
+
+document.getElementById(
+"game"
+).style.display="none";
+
+updateProgress();
+
+}
+
+
+/* =========================
+   PHONICS
+========================= */
+
+function startPhonics(){
+
+currentMode="phonics";
+
+currentIndex=0;
+
+showGame();
+
+showPhonics();
+
+}
+
+
+/* =========================
+   SHOW PHONICS
+========================= */
+
+function showPhonics(){
+
+const item=
+phonics[currentIndex];
+
+document.getElementById(
+"gameTitle"
+).innerHTML=
+"<h2>🔤 Letter Sound</h2>";
+
+document.getElementById(
+"gameContent"
+).innerHTML=`
+
+<div class="bigLetter">
+${item.letter}
+</div>
+
+<div class="picture">
+${item.emoji}
+</div>
+
+<h3>
+${item.word}
+</h3>
+
+<p>
+Sound:
+<strong>${item.sound}</strong>
+</p>
+
+<button
+class="soundBtn"
+onclick="speak('${item.sound}')">
+🔊
+</button>
+
+<div class="alphabet">
+
+${phonics.map(
+(p,i)=>`
+
+<button
+class="letterBtn"
+onclick="phonicsJump(${i})">
+
+${p.letter}
+
+</button>
+
+`).join("")}
+
+</div>
+`;
+
+document.getElementById(
+"feedback"
+).textContent="";
+
+document.getElementById(
+"nextBtn"
+).classList.remove(
+"hidden"
+);
+
+document.getElementById(
+"nextBtn"
+).textContent=
+"➡️ Next Letter";
+
+}
+
+
+/* =========================
+   PHONICS JUMP
+========================= */
+
+function phonicsJump(i){
+
+currentIndex=i;
+
+showPhonics();
+
+}
+
+
+/* =========================
+   BLENDING
+========================= */
+
+function startBlending(){
+
+currentMode="blending";
+
+currentIndex=0;
+
+showGame();
+
+showBlend();
+
+}
+
+
+/* =========================
+   SHOW BLEND
+========================= */
+
+function showBlend(){
+
+const item=
+words[currentIndex];
+
+document.getElementById(
+"gameTitle"
+).innerHTML=
+"<h2>🧩 Blend the Sounds</h2>";
+
+document.getElementById(
+"gameContent"
+).innerHTML=`
+
+<div class="picture">
+${item.emoji}
+</div>
+
+<h3>
+Blend these sounds:
+</h3>
+
+<div class="word">
+${item.letters.join(" + ")}
+</div>
+
+<button
+class="soundBtn"
+onclick="speak(
+'${item.letters.join(' ')}'
+)">
+🔊
+</button>
+
+<p>
+What word do they make?
+</p>
+
+<button
+class="nextBtn"
+onclick="revealBlend()">
+
+✨ Show Word
+
+</button>
+`;
+
+document.getElementById(
+"feedback"
+).textContent="";
+
+document.getElementById(
+"nextBtn"
+).classList.add(
+"hidden"
+);
+
+}
+
+
+/* =========================
+   REVEAL BLEND
+========================= */
+
+function revealBlend(){
+
+const item=
+words[currentIndex];
+
+document.getElementById(
+"feedback"
+).innerHTML=
+`🎉 ${item.letters.join(" + ")}
+→ <strong>${item.word}</strong>`;
+
+speak(item.word);
+
+stars+=5;
+coins+=2;
+
+updateHUD();
+
+document.getElementById(
+"nextBtn"
+).classList.remove(
+"hidden"
+);
+
+document.getElementById(
+"nextBtn"
+).textContent=
+"➡️ Next Word";
+
+}
+
+
+/* =========================
+   READING
+========================= */
+
+function startReading(){
+
+currentMode="reading";
+
+currentIndex=0;
+
+showGame();
+
+showReading();
+
+}
+
+
+/* =========================
+   SHOW READING
+========================= */
+
+function showReading(){
+
+const item=
+words[currentIndex];
+
+document.getElementById(
+"gameTitle"
+).innerHTML=
+"<h2>📖 Read the Word</h2>";
+
+document.getElementById(
+"gameContent"
+).innerHTML=`
+
+<div class="picture">
+${item.emoji}
+</div>
+
+<div class="word">
+${item.word}
+</div>
+
+<button
+class="soundBtn"
+onclick="speak('${item.word}')">
+
+🔊
+
+</button>
+
+<p>
+Tap the speaker and read aloud!
+</p>
+
+<button
+class="nextBtn"
+onclick="readingDone()">
+
+⭐ I Read It!
+
+</button>
+
+`;
+
+document.getElementById(
+"feedback"
+).textContent="";
+
+document.getElementById(
+"nextBtn"
+).classList.add(
+"hidden"
+);
+
+}
+
+
+/* =========================
+   READING DONE
+========================= */
+
+function readingDone(){
+
+stars+=5;
+coins+=1;
+
+updateHUD();
+
+document.getElementById(
+"feedback"
+).textContent=
+"🌟 Great reading!";
+
+document.getElementById(
+"nextBtn"
+).classList.remove(
+"hidden"
+);
+
+document.getElementById(
+"nextBtn"
+).textContent=
+"➡️ Next Word";
+
+}
+
+
+/* =========================
+   SPELLING
+========================= */
+
+function startSpelling(){
+
+currentMode="spelling";
+
+currentIndex=0;
+
+showGame();
+
+showSpelling();
+
+}
+
+
+/* =========================
+   SHOW SPELLING
+========================= */
+
+function showSpelling(){
+
+const item=
+words[currentIndex];
+
+answered=false;
+
+const missing=
+Math.floor(
+Math.random()*item.word.length
+);
+
+const answer=
+item.word[missing];
+
+let display="";
+
+for(
+let i=0;
+i<item.word.length;
+i++
+){
+
+display+=
+i===missing
+?"_"
+:item.word[i];
+
+}
+
+let options=[
+answer
+];
+
+while(options.length<4){
+
+const letter=
+String.fromCharCode(
+65+
+Math.floor(
+Math.random()*26
+)
+);
+
+if(!options.includes(letter)){
+options.push(letter);
+}
+
+}
+
+options.sort(
+()=>Math.random()-.5
+);
+
+document.getElementById(
+"gameTitle"
+).innerHTML=
+"<h2>✏️ Spell the Word</h2>";
+
+document.getElementById(
+"gameContent"
+).innerHTML=`
+
+<div class="picture">
+${item.emoji}
+</div>
+
+<button
+class="soundBtn"
+onclick="speak('${item.word}')">
+🔊
+</button>
+
+<div class="word">
+${display}
+</div>
+
+<p>
+Listen and choose the missing letter.
+</p>
+
+<div class="answerGrid">
+
+${options.map(
+letter=>`
+
+<button
+class="answerBtn"
+onclick="checkSpelling(
+'${letter}',
+'${answer}'
+)">
+
+${letter}
+
+</button>
+
+`).join("")}
+
+</div>
+
+`;
+
+document.getElementById(
+"feedback"
+).textContent="";
+
+document.getElementById(
+"nextBtn"
+).classList.add(
+"hidden"
+);
+
+}
+
+
+/* =========================
+   CHECK SPELLING
+========================= */
+
+function checkSpelling(
+selected,
+answer
+){
+
+if(answered)return;
+
+if(
+selected===answer
+){
+
+answered=true;
+
+stars+=10;
+coins+=3;
+
+document.getElementById(
+"feedback"
+).textContent=
+"🎉 Correct! Excellent spelling!";
+
+speak(
+"Correct! "+
+words[currentIndex].word
+);
+
+document.getElementById(
+"nextBtn"
+).classList.remove(
+"hidden"
+);
+
+document.getElementById(
+"nextBtn"
+).textContent=
+"➡️ Next Word";
+
+updateHUD();
+
+}else{
+
+document.getElementById(
+"feedback"
+).textContent=
+"💡 Try again!";
+
+speak("Try again");
+
+}
+
+}
+
+
+/* =========================
+   NEXT
+========================= */
+
+function nextQuestion(){
+
+currentIndex++;
+
+if(
+currentIndex>=words.length
+){
+
+currentIndex=0;
+
+level++;
+
+updateHUD();
+
+document.getElementById(
+"feedback"
+).textContent=
+"🏆 New Level!";
+
+}
+
+if(currentMode==="phonics"){
+showPhonics();
+}
+
+if(currentMode==="blending"){
+showBlend();
+}
+
+if(currentMode==="reading"){
+showReading();
+}
+
+if(currentMode==="spelling"){
+showSpelling();
+}
+
+}
+
+
+/* =========================
+   SHOW GAME
+========================= */
+
+function showGame(){
+
+document.getElementById(
+"menu"
+).style.display="none";
+
+document.getElementById(
+"game"
+).style.display="block";
+
+updateHUD();
+
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+function updateProgress(){
+
+const total=26+words.length*3;
+
+const progress=
+Math.min(
+100,
+(stars/total)*100
+);
+
+document.getElementById(
+"progressBar"
+).style.width=
+progress+"%";
+
+document.getElementById(
+"progressText"
+).textContent=
+stars>50
+?"🌟 Amazing progress!"
+:"Keep learning and earn stars!";
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+updateHUD();
+updateProgress();
+
+</script>
+
+</body>
+  </html>

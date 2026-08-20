@@ -286,8 +286,69 @@ function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.re
 function goHome(){show('home');updateProgress()}
 function save(){localStorage.setItem('phonicsStars',stars);localStorage.setItem('phonicsCoins',coins);localStorage.setItem('phonicsBadges',badges);document.getElementById('stars').textContent=stars;document.getElementById('coins').textContent=coins;document.getElementById('badges').textContent=badges}
 function reward(){stars++;coins+=2;if(stars%20===0)badges++;save()}
-function speak(text){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(text);u.rate=.72;u.pitch=1.08;speechSynthesis.speak(u)}
-function speakPhonics(text){speak(text)}
+/* =========================
+   PHONICS VOICE ENGINE
+   The browser cannot reliably speak IPA such as /ă/ or /sh/.
+   We therefore give TTS a simple, pronounceable sound cue.
+========================= */
+
+const phonicsVoice={
+  a:"ah", b:"buh", c:"kuh", d:"duh", e:"eh", f:"fff",
+  g:"guh", h:"huh", i:"ih", j:"juh", k:"kuh", l:"lll",
+  m:"mmm", n:"nnn", o:"ah", p:"puh", q:"kwuh", r:"rrr",
+  s:"sss", t:"tuh", u:"uh", v:"vvv", w:"wuh", x:"ks",
+  y:"yuh", z:"zzz"
+};
+
+const phonicsVoiceLong={
+  a:"ay", e:"ee", i:"eye", o:"oh", u:"yoo"
+};
+
+const digraphVoice={
+  sh:"shh", ch:"ch", th:"th", wh:"wuh", ph:"fff", ck:"kuh"
+};
+
+const blendVoice={
+  bl:"buh lll", cl:"kuh lll", fl:"fff lll",
+  br:"buh rrr", cr:"kuh rrr", dr:"duh rrr",
+  st:"sss tuh", sp:"sss puh", tr:"tuh rrr"
+};
+
+function speak(text,rate=.72){
+  if(!("speechSynthesis" in window))return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.rate=rate;
+  u.pitch=1.08;
+  u.lang="en-US";
+  speechSynthesis.speak(u);
+}
+
+function speakSoundAndWord(soundCue,word){
+  if(!("speechSynthesis" in window))return;
+  speechSynthesis.cancel();
+
+  const sound=new SpeechSynthesisUtterance(soundCue);
+  sound.rate=.55;
+  sound.pitch=1.12;
+  sound.lang="en-US";
+
+  const pause=new SpeechSynthesisUtterance(" ");
+  pause.rate=.5;
+
+  const wordVoice=new SpeechSynthesisUtterance(word);
+  wordVoice.rate=.72;
+  wordVoice.pitch=1.05;
+  wordVoice.lang="en-US";
+
+  speechSynthesis.speak(sound);
+  speechSynthesis.speak(pause);
+  speechSynthesis.speak(wordVoice);
+}
+
+function speakPhonics(text){
+  speakSoundAndWord(text,"");
+}
 
 function openLetters(){
  show('letters');renderLetterGrid();renderLetter();
@@ -304,7 +365,11 @@ function renderLetter(){
  document.getElementById('letterWord').textContent=d[2];
  renderLetterGrid();
 }
-function speakCurrentLetter(){let d=letters[letterIndex];speak('The letter '+d[0]+'. Its sound is '+d[1].replaceAll('/','')+'. '+d[2])}
+function speakCurrentLetter(){
+  let d=letters[letterIndex];
+  let cue=phonicsVoice[d[0]]||d[0];
+  speakSoundAndWord(cue,d[2]);
+}
 function prevLetter(){letterIndex=(letterIndex+25)%26;renderLetter()}
 function nextLetter(){letterIndex=(letterIndex+1)%26;renderLetter()}
 
@@ -322,7 +387,13 @@ function renderVowels(){
  let ex=document.getElementById('vowelExamples');ex.innerHTML='';
  d.ex.forEach(w=>{let b=document.createElement('button');b.textContent=w;b.onclick=()=>speak(w);ex.appendChild(b)});
 }
-function speakVowel(){let d=(vowelMode==='short'?shortVowels:longVowels)[vowelIndex];speak(d.v+' says '+d.s+'. '+d.w)}
+function speakVowel(){
+  let d=(vowelMode==='short'?shortVowels:longVowels)[vowelIndex];
+  let cue=vowelMode==='short'
+    ? phonicsVoice[d.v]
+    : phonicsVoiceLong[d.v];
+  speakSoundAndWord(cue,d.w);
+}
 
 function openBlend(){show('blend');renderBlend()}
 function renderBlend(){
@@ -333,7 +404,32 @@ function renderBlend(){
  [...word].forEach((ch,i)=>{let b=document.createElement('button');b.className='blend-letter';b.textContent=ch;b.onclick=()=>speak(ch);box.appendChild(b)});
  document.getElementById('blendMsg').textContent='Tap each letter sound, then blend!';
 }
-function speakBlend(){let w=cvc[blendIndex][0];speak([...w].join('...')+'... '+w);reward();document.getElementById('blendMsg').textContent='🎉 Great blending!'}
+function speakBlend(){
+  let w=cvc[blendIndex][0];
+  if(!("speechSynthesis" in window))return;
+  speechSynthesis.cancel();
+
+  [...w].forEach(ch=>{
+    let u=new SpeechSynthesisUtterance(phonicsVoice[ch]||ch);
+    u.rate=.5;
+    u.pitch=1.1;
+    u.lang="en-US";
+    speechSynthesis.speak(u);
+  });
+
+  let pause=new SpeechSynthesisUtterance(" ");
+  pause.rate=.4;
+  speechSynthesis.speak(pause);
+
+  let wordVoice=new SpeechSynthesisUtterance(w);
+  wordVoice.rate=.7;
+  wordVoice.pitch=1.05;
+  wordVoice.lang="en-US";
+  speechSynthesis.speak(wordVoice);
+
+  reward();
+  document.getElementById('blendMsg').textContent='🎉 Sounds → blend → word!';
+}
 function prevBlend(){blendIndex=(blendIndex+cvc.length-1)%cvc.length;renderBlend()}
 function nextBlend(){blendIndex=(blendIndex+1)%cvc.length;renderBlend()}
 
@@ -360,7 +456,12 @@ function renderDigraphs(){
  let ex=document.getElementById('digraphExamples');ex.innerHTML='';
  d[4].forEach(w=>{let b=document.createElement('button');b.textContent=w;b.onclick=()=>speak(w);ex.appendChild(b)})
 }
-function speakDigraph(){let d=digraphs[digraphIndex];speak(d[0]+' says '+d[1]+'. '+d[2]);reward()}
+function speakDigraph(){
+  let d=digraphs[digraphIndex];
+  let cue=digraphVoice[d[0]]||d[0];
+  speakSoundAndWord(cue,d[2]);
+  reward();
+}
 
 function openBlends(){show('blends');renderBlendGroups()}
 function renderBlendGroups(){
@@ -373,7 +474,12 @@ function renderBlendGroups(){
  let ex=document.getElementById('blendGroupExamples');ex.innerHTML='';
  d[3].forEach(w=>{let b=document.createElement('button');b.textContent=w;b.onclick=()=>speak(w);ex.appendChild(b)})
 }
-function speakBlendGroup(){let d=blends[blendGroupIndex];speak(d[0]+'. '+d[1]+'. '+d[2]);reward()}
+function speakBlendGroup(){
+  let d=blends[blendGroupIndex];
+  let cue=blendVoice[d[0]]||d[0];
+  speakSoundAndWord(cue,d[2]);
+  reward();
+}
 
 function openSpelling(){show('spelling');newSpellingWord()}
 function newSpellingWord(){

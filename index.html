@@ -231,6 +231,126 @@ const longVowels=[
 {v:'o',s:'/ō/',w:'home',p:'🏠',ex:['home','rope','hope']},
 {v:'u',s:'/ū/ or /yū/',w:'cube',p:'🧊',ex:['cube','cute','tube']}
 ];
+  <!-- =========================
+     VOWEL TEAMS
+========================= -->
+
+<section id="vowelTeamsSection" class="learning-section">
+
+  <h2>🌈 Vowel Teams</h2>
+
+  <p class="lesson-intro">
+    Two or more letters work together to make a vowel sound.
+  </p>
+
+  <div class="vowel-team-grid">
+
+    <button class="vowel-card" onclick="learnVowelTeam('ai')">
+      <strong>ai</strong>
+      <span>rain 🌧️</span>
+    </button>
+
+    <button class="vowel-card" onclick="learnVowelTeam('ay')">
+      <strong>ay</strong>
+      <span>play 🎮</span>
+    </button>
+
+    <button class="vowel-card" onclick="learnVowelTeam('ee')">
+      <strong>ee</strong>
+      <span>tree 🌳</span>
+    </button>
+
+    <button class="vowel-card" onclick="learnVowelTeam('ea')">
+      <strong>ea</strong>
+      <span>leaf 🍃</span>
+    </button>
+
+    <button class="vowel-card" onclick="learnVowelTeam('oa')">
+      <strong>oa</strong>
+      <span>boat 🚤</span>
+    </button>
+
+    <button class="vowel-card" onclick="learnVowelTeam('ow')">
+      <strong>ow</strong>
+      <span>snow ❄️</span>
+    </button>
+
+    <button class="vowel-card" onclick="learnVowelTeam('oo')">
+      <strong>oo</strong>
+      <span>moon 🌙</span>
+    </button>
+
+    <button class="vowel-card" onclick="learnVowelTeam('oi')">
+      <strong>oi</strong>
+      <span>coin 🪙</span>
+    </button>
+
+    <button class="vowel-card" onclick="learnVowelTeam('oy')">
+      <strong>oy</strong>
+      <span>toy 🧸</span>
+    </button>
+
+    <button class="vowel-card" onclick="learnVowelTeam('ou')">
+      <strong>ou</strong>
+      <span>cloud ☁️</span>
+    </button>
+
+    <button class="vowel-card" onclick="learnVowelTeam('aw')">
+      <strong>aw</strong>
+      <span>paw 🐾</span>
+    </button>
+
+    <button class="vowel-card" onclick="learnVowelTeam('au')">
+      <strong>au</strong>
+      <span>August 📅</span>
+    </button>
+
+    <button class="vowel-card" onclick="learnVowelTeam('ar')">
+      <strong>ar</strong>
+      <span>car 🚗</span>
+    </button>
+
+    <button class="vowel-card" onclick="learnVowelTeam('or')">
+      <strong>or</strong>
+      <span>corn 🌽</span>
+    </button>
+
+    <button class="vowel-card" onclick="learnVowelTeam('er')">
+      <strong>er</strong>
+      <span>her 👧</span>
+    </button>
+
+    <button class="vowel-card" onclick="learnVowelTeam('ir')">
+      <strong>ir</strong>
+      <span>bird 🐦</span>
+    </button>
+
+    <button class="vowel-card" onclick="learnVowelTeam('ur')">
+      <strong>ur</strong>
+      <span>turn 🔄</span>
+    </button>
+
+  </div>
+
+  <div id="vowelTeamLesson" class="vowel-team-lesson">
+
+    <div id="selectedTeam">Tap a vowel team</div>
+
+    <div id="selectedWord">🔊</div>
+
+    <button class="sound-button"
+            onclick="playSelectedVowelTeam()">
+      🔊 Hear Sound
+    </button>
+
+    <button class="sound-button"
+            onclick="playSelectedWord()">
+      🗣️ Hear Word
+    </button>
+
+  </div>
+
+</section>
 
 const cvc=[
 ['cat','🐱'],['bat','🦇'],['map','🗺️'],['sun','☀️'],['cup','🥤'],['bug','🐞'],
